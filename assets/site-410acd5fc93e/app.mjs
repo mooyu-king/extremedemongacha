@@ -143,6 +143,46 @@ for (const button of $$('[data-load-video]')) button.addEventListener('click', (
   frame.focus();
 });
 
+const cardMedia = $('[data-card-video]');
+if (cardMedia) {
+  const start = $('[data-start-card-video]', cardMedia);
+  const video = $('video', cardMedia);
+  if (video) {
+    const status = $('[data-card-video-status]', cardMedia);
+    const playbackError = () => {
+      status.hidden = false;
+      status.textContent = 'The preview could not start. Try the video link below.';
+    };
+    start.hidden = false;
+    start.addEventListener('click', async () => {
+      status.hidden = true;
+      start.disabled = true;
+      try {
+        await video.play();
+      } catch {
+        playbackError();
+      } finally {
+        start.disabled = false;
+      }
+    });
+    video.addEventListener('playing', () => {
+      if (document.activeElement === start) video.focus();
+      start.hidden = true;
+      status.hidden = true;
+    });
+    video.addEventListener('error', playbackError);
+    if (video.error) playbackError();
+  } else {
+    start.addEventListener('click', event => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const frame = $('template', cardMedia).content.querySelector('iframe').cloneNode();
+      start.closest('.video-frame').replaceChildren(frame);
+      frame.focus();
+    });
+  }
+}
+
 function calculatorState(form) {
   const { mode, card, chance, slots, foil } = form.elements;
   const custom = mode.value === 'custom';
@@ -290,7 +330,7 @@ function renderCollectionLink() {
   $('[data-collection-link]').setAttribute('aria-label', 'My Collection, ' + save.favorites.length + ' favorites');
 }
 
-function showFilters() {
+function showFilters(revealMatches = false) {
   const root = $('[data-practice-catalog]');
   const search = $('[data-search]', root).value;
   const theme = $('[data-filter="theme"]').value;
@@ -305,9 +345,10 @@ function showFilters() {
         ownership === 'favorites' ? favorites.has(card.id) : true;
     return (!theme || card.theme === theme) && (!tier || card.tier === tier) && stateMatch;
   });
-  const matches = matchCards(eligible, search);
+  const eligibleReferences = theme || ownership ? [] : referenceEntries.filter(card => !tier || card.tier === tier);
+  const matches = matchCards([...eligible, ...eligibleReferences], search);
   const shown = new Set(matches.map(card => card.id));
-  for (const item of $$('.card-item[data-id]')) {
+  for (const item of $$('.card-item[data-id]', root)) {
     const count = copies(item.dataset.id);
     const owned = count.normal + count.foil > 0;
     item.hidden = !shown.has(item.dataset.id);
@@ -317,12 +358,29 @@ function showFilters() {
     button.setAttribute('aria-pressed', String(favorite));
     $('[data-favorite-label]', button).textContent = favorite ? 'Saved' : 'Save';
   }
-  const empty = ownership === 'favorites' && !favorites.size ? 'No favorites yet. Clear the filters and save a card with its heart button.' : 'No close matches. Try part of a name or fewer filters.';
-  $('[data-filter-status]').textContent = shown.size ? 'Showing ' + shown.size + (shown.size === 1 ? ' card.' : ' cards.') : empty;
-  showSuggestions(root, matches, showFilters);
+  const referenceGrid = $('#verification-cards', root);
+  const referenceItems = $$('[data-reference-card]', referenceGrid);
+  for (const item of referenceItems) item.hidden = !shown.has(item.dataset.referenceCard);
+  const referenceCount = matches.filter(card => card.verificationId).length;
+  const practiceCount = matches.length - referenceCount;
+  for (const group of $$('[data-catalog-group]', root)) {
+    const visible = $$('.card-item:not([hidden])', group).length;
+    group.hidden = !visible;
+    if (revealMatches && visible) group.open = true;
+    $('[data-group-count]', group).textContent = visible + (visible === 1 ? ' card' : ' cards');
+  }
+  const practice = $('[data-practice-results-grid]', root);
+  practice.hidden = !practiceCount;
+  if (revealMatches && practiceCount) practice.open = true;
+  const counts = [];
+  if (practiceCount) counts.push(practiceCount + ' practice ' + (practiceCount === 1 ? 'card' : 'cards'));
+  if (referenceCount) counts.push(referenceCount + ' reference ' + (referenceCount === 1 ? 'card' : 'cards'));
+  const empty = ownership === 'favorites' && !favorites.size ? 'No favorites yet. Clear the filters and save a card with its heart button.' : 'No close matches. Try a name or rank, or clear the filters.';
+  $('[data-filter-status]', root).textContent = counts.length ? 'Showing ' + counts.join(' and ') + '.' : empty;
+  showSuggestions(root, matches, () => showFilters(true));
 }
 
-function renderCollection() {
+function renderCollection(revealMatches = false) {
   const theme = $('[data-filter="theme"]').value;
   const catalog = theme ? practiceCards.filter(c => c.theme === theme) : practiceCards;
   const distinct = catalog.filter(card => copies(card.id).normal + copies(card.id).foil > 0).length;
@@ -330,7 +388,7 @@ function renderCollection() {
   const score = catalog.reduce((sum, card) => sum + (copies(card.id).foil ? card.score * 2 : copies(card.id).normal ? card.score : 0), 0);
   collection.textContent = (theme ? theme + ' · ' : '') + distinct + ' / ' + catalog.length + ' collected · ' + foils + ' foil · ' + score + ' points · ' + save.favorites.length + ' favorites';
   renderCollectionLink();
-  showFilters();
+  showFilters(revealMatches);
 }
 
 function pickIndex(random, total) {
@@ -391,7 +449,7 @@ function openCard(id, caller) {
   const reference = Boolean(card.verificationId);
   const slots = reference ? 5 : labRules.slots;
   const foilRate = reference ? 0.1 : labRules.foil;
-  const sheet = openSheet('card-dialog', caller);
+  const sheet = $('#card-dialog');
   $('#card-dialog-heading').textContent = card.name;
   const body = $('[data-sheet-body]', sheet);
   const count = copies(card.id);
@@ -419,9 +477,12 @@ function openCard(id, caller) {
   preview.href = card.path;
   preview.setAttribute('aria-label', 'Open ' + card.name + ' card page and video');
   const summary = reference ? 'Rank #' + card.rank + ' · ' + card.tier + ' · Original reference v4' : card.theme + ' · ' + card.tier + ' · Lab Practice Pack';
-  preview.append(art, element('span', 'Open Card Page & Video', 'button primary'), element('p', summary), stats);
-  if (card.tip) preview.append(element('p', card.tip));
+  const copy = element('div', '', 'card-preview-copy');
+  copy.append(element('p', summary));
+  if (card.tip) copy.append(element('p', card.tip));
+  preview.append(art, copy, stats, element('span', 'Open Card Page & Video', 'button primary'));
   body.replaceChildren(preview);
+  openSheet('card-dialog', caller);
   sheet.scrollTop = 0;
   return true;
 }
@@ -560,12 +621,21 @@ if (collection) {
     }
   });
 
-  $('[data-search]').addEventListener('input', showFilters);
-  for (const filter of $$('[data-filter]')) filter.addEventListener('change', renderCollection);
-  $('[data-reset-filters]').addEventListener('click', () => {
+  $('[data-search]').addEventListener('input', () => showFilters(true));
+  for (const filter of $$('[data-filter]')) filter.addEventListener('change', () => renderCollection(true));
+  function resetFilters() {
     $('[data-search]').value = '';
     for (const field of $$('[data-filter]')) field.value = '';
     renderCollection();
+  }
+  $('[data-reset-filters]').addEventListener('click', resetFilters);
+  for (const link of $$('[data-category-links] a')) link.addEventListener('click', event => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    resetFilters();
+    const group = document.getElementById(link.hash.slice(1));
+    group.open = true;
+    const practice = group.closest('[data-practice-results-grid]');
+    if (practice) practice.open = true;
   });
   for (const button of $$('[data-favorite]')) button.addEventListener('click', () =>
     toggleFavorite(button, initialized, renderCollection, gameStatusSave));

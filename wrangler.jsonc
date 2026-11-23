@@ -1,0 +1,9 @@
+{
+  "name": "extreme-demon-gacha",
+  "compatibility_date": "2025-11-20",
+  "assets": {
+    "directory": ".",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

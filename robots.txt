@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://extremedemongacha.games/sitemap.xml

@@ -1,0 +1,10 @@
+/.wrangler/
+/.cache/
+/node_modules/
+/.env*
+/.dev.vars*
+/*.log
+/AGENTS.md
+/HANDOFF.md
+/PROJECT_NOTES.md
+/PRD.md

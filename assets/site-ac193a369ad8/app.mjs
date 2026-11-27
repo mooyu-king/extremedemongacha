@@ -330,7 +330,14 @@ function renderCollectionLink() {
   $('[data-collection-link]').setAttribute('aria-label', 'My Collection, ' + save.favorites.length + ' favorites');
 }
 
-function showFilters(revealMatches = false) {
+const pageSize = 30;
+let catalogPage = 1;
+function setCatalogPage(page) {
+  catalogPage = page;
+  showFilters();
+}
+
+function showFilters(revealMatches = false, targetGroup) {
   const root = $('[data-practice-catalog]');
   const search = $('[data-search]', root).value;
   const theme = $('[data-filter="theme"]').value;
@@ -347,7 +354,23 @@ function showFilters(revealMatches = false) {
   });
   const eligibleReferences = theme || ownership ? [] : referenceEntries.filter(card => !tier || card.tier === tier);
   const matches = matchCards([...eligible, ...eligibleReferences], search);
-  const shown = new Set(matches.map(card => card.id));
+  const ids = new Set(matches.map(card => card.id));
+  const cards = $$('.card-item[data-id], .card-item[data-reference-card]', root);
+  const matchedCards = cards.filter(item => ids.has(item.dataset.id ?? item.dataset.referenceCard));
+  const pages = Math.max(1, Math.ceil(matchedCards.length / pageSize));
+  if (revealMatches) catalogPage = 1;
+  if (targetGroup) catalogPage = Math.floor(Math.max(0, matchedCards.findIndex(item => targetGroup.contains(item))) / pageSize) + 1;
+  catalogPage = Math.min(pages, Math.max(1, catalogPage));
+  const first = (catalogPage - 1) * pageSize;
+  const shown = new Set(matchedCards.slice(first, first + pageSize).map(item => item.dataset.id ?? item.dataset.referenceCard));
+  const pager = $('[data-catalog-pagination]', root);
+  const selector = $('[data-page-select]', pager);
+  pager.hidden = pages <= 1;
+  if (selector.options.length !== pages) selector.replaceChildren(...Array.from({ length: pages }, (_, index) => new Option(String(index + 1), index + 1)));
+  selector.value = String(catalogPage);
+  $('[data-page-step="-1"]', pager).disabled = catalogPage === 1;
+  $('[data-page-step="1"]', pager).disabled = catalogPage === pages;
+  history.replaceState({ ...history.state, cardList: { page: catalogPage, search, theme, tier, ownership } }, '');
   for (const item of $$('.card-item[data-id]', root)) {
     const count = copies(item.dataset.id);
     const owned = count.normal + count.foil > 0;
@@ -361,7 +384,8 @@ function showFilters(revealMatches = false) {
   const referenceGrid = $('#verification-cards', root);
   const referenceItems = $$('[data-reference-card]', referenceGrid);
   for (const item of referenceItems) item.hidden = !shown.has(item.dataset.referenceCard);
-  const referenceCount = matches.filter(card => card.verificationId).length;
+  for (const band of $$('[data-reference-band]', referenceGrid)) band.hidden = !$('[data-reference-card]:not([hidden])', band);
+  const referenceCount = matches.filter(card => card.id.startsWith('reference-')).length;
   const practiceCount = matches.length - referenceCount;
   for (const group of $$('[data-catalog-group]', root)) {
     const visible = $$('.card-item:not([hidden])', group).length;
@@ -370,13 +394,15 @@ function showFilters(revealMatches = false) {
     $('[data-group-count]', group).textContent = visible + (visible === 1 ? ' card' : ' cards');
   }
   const practice = $('[data-practice-results-grid]', root);
-  practice.hidden = !practiceCount;
-  if (revealMatches && practiceCount) practice.open = true;
+  const practiceShown = Boolean($('.card-item:not([hidden])', practice));
+  practice.hidden = !practiceShown;
+  if (revealMatches && practiceShown) practice.open = true;
   const counts = [];
   if (practiceCount) counts.push(practiceCount + ' practice ' + (practiceCount === 1 ? 'card' : 'cards'));
   if (referenceCount) counts.push(referenceCount + ' reference ' + (referenceCount === 1 ? 'card' : 'cards'));
   const empty = ownership === 'favorites' && !favorites.size ? 'No favorites yet. Clear the filters and save a card with its heart button.' : 'No close matches. Try a name or rank, or clear the filters.';
-  $('[data-filter-status]', root).textContent = counts.length ? 'Showing ' + counts.join(' and ') + '.' : empty;
+  $('[data-filter-status]', root).textContent = counts.length
+    ? `Showing ${first + 1}–${Math.min(first + pageSize, matches.length)} of ${matches.length} cards (${counts.join(' and ')}).` : empty;
   showSuggestions(root, matches, () => showFilters(true));
 }
 
@@ -446,7 +472,7 @@ function showPack(pack, revealed = false) {
 function openCard(id, caller) {
   const card = games.get(id) ?? referenceEntries.find(entry => entry.id === id);
   if (!card) return false;
-  const reference = Boolean(card.verificationId);
+  const reference = card.id.startsWith('reference-');
   const slots = reference ? 5 : labRules.slots;
   const foilRate = reference ? 0.1 : labRules.foil;
   const sheet = $('#card-dialog');
@@ -454,8 +480,8 @@ function openCard(id, caller) {
   const body = $('[data-sheet-body]', sheet);
   const count = copies(card.id);
   const pairs = [
-    ['Normal score', card.score.toLocaleString('en-US')], ['Foil score', (card.score * (reference ? 3 : 2)).toLocaleString('en-US')],
-    reference ? ['Verified by', card.verifier] : ['You own', count.normal + ' normal · ' + count.foil + ' foil'],
+    ['Normal score', card.score?.toLocaleString('en-US') ?? '—'], ['Foil score', card.score === null ? '—' : (card.score * (reference ? 3 : 2)).toLocaleString('en-US')],
+    reference ? ['Video', card.verificationId ? card.verifier : 'Original preview'] : ['You own', count.normal + ' normal · ' + count.foil + ' foil'],
     ['Per pack, any', percentages(probabilityInPacks(card.probability, slots, 1))],
     ['In 10 packs, any', percentages(probabilityInPacks(card.probability, slots, 10))],
     ['In 100 packs, any', percentages(probabilityInPacks(card.probability, slots, 100))],
@@ -476,7 +502,7 @@ function openCard(id, caller) {
   const preview = element('a', '', 'card-preview-link');
   preview.href = card.path;
   preview.setAttribute('aria-label', 'Open ' + card.name + ' card page and video');
-  const summary = reference ? 'Rank #' + card.rank + ' · ' + card.tier + ' · Original reference v4' : card.theme + ' · ' + card.tier + ' · Lab Practice Pack';
+  const summary = card.tier === 'Limited' ? 'Limited · Out of regular packs' : reference ? 'Rank #' + card.rank + ' · ' + card.tier + ' · Original reference v4' : card.theme + ' · ' + card.tier + ' · Lab Practice Pack';
   const copy = element('div', '', 'card-preview-copy');
   copy.append(element('p', summary));
   if (card.tip) copy.append(element('p', card.tip));
@@ -561,6 +587,9 @@ async function restoreView() {
     gameStatusSave.textContent = 'Storage is unavailable. Practice cards stay on this page until you leave. Export a backup to keep them.';
   }
   renderCollection();
+  if (!history.state?.cardListRestored && location.hash === '#verification-cards') {
+    showFilters(true, $('#verification-cards'));
+  }
   showPack(save.latest, true);
   const target = new URLSearchParams(location.search).get('card');
   if (target && games.has(target)) {
@@ -621,9 +650,20 @@ if (collection) {
     }
   });
 
+  const persisted = history.state?.cardList;
+  if (persisted) {
+    history.replaceState({ ...history.state, cardListRestored: true }, '');
+    catalogPage = Number.isInteger(persisted.page) ? persisted.page : 1;
+    $('[data-search]').value = persisted.search || '';
+    for (const key of ['theme', 'tier', 'ownership']) $('[data-filter="' + key + '"]').value = persisted[key] || '';
+  }
+  const pager = $('[data-catalog-pagination]');
+  $('[data-page-select]', pager).addEventListener('change', event => setCatalogPage(Number(event.target.value)));
+  for (const button of $$('[data-page-step]', pager)) button.addEventListener('click', () => setCatalogPage(catalogPage + Number(button.dataset.pageStep)));
   $('[data-search]').addEventListener('input', () => showFilters(true));
   for (const filter of $$('[data-filter]')) filter.addEventListener('change', () => renderCollection(true));
   function resetFilters() {
+    catalogPage = 1;
     $('[data-search]').value = '';
     for (const field of $$('[data-filter]')) field.value = '';
     renderCollection();
@@ -633,6 +673,7 @@ if (collection) {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     resetFilters();
     const group = document.getElementById(link.hash.slice(1));
+    showFilters(true, group);
     group.open = true;
     const practice = group.closest('[data-practice-results-grid]');
     if (practice) practice.open = true;

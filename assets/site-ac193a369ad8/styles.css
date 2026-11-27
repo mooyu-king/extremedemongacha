@@ -84,7 +84,15 @@ h1,h2,h3{line-height:1.16;letter-spacing:-.035em;margin:0 0 .54em}h1{font-size:c
 .card-video-start[hidden]{display:none}
 .card-item :is(h4,h5){font-size:1.05rem;margin:1px 0 5px;overflow-wrap:anywhere}
 .card-actions-single{grid-template-columns:minmax(0,1fr)}
+.reference-band h4{margin:0 0 8px}
+.reference-band h4 a{display:inline-flex;align-items:center;gap:8px;min-height:44px}
 [data-practice-results-grid][hidden]+#verification-cards{margin-top:0}
+.catalog-pagination{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.5rem;margin-block:1rem}
+.catalog-pagination[hidden]{display:none}
+.catalog-pagination label{display:flex;align-items:center;gap:.45rem}
+.catalog-pagination select{width:auto;min-height:44px}
+.catalog-pagination .button{min-width:6rem}
+.catalog-pagination .button:disabled{opacity:.55;cursor:default}
 #practice-cards-title{
   display:flex;align-items:center;flex:1;gap:clamp(12px,2.4vw,28px);margin:0;
   font:700 clamp(1.65rem,1.2rem + 1.8vw,2.55rem)/1.15 Georgia,'Times New Roman',serif;

@@ -7,6 +7,7 @@
   <url><loc>https://extremedemongacha.games/privacy/</loc><lastmod>2026-11-26</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://extremedemongacha.games/contact/</loc><lastmod>2026-11-26</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://extremedemongacha.games/terms/</loc><lastmod>2026-11-26</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://extremedemongacha.games/guide/apex/</loc><lastmod>2026-11-26</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://extremedemongacha.games/cards/grief/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/artemis-13/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/society/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -80,12 +81,62 @@
   <url><loc>https://extremedemongacha.games/cards/saul-goodman/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/britney-no-sclears/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/stellar-night/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/gaggatrondra/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/sevvend-clubstep/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/edge-of-destiny/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/losing-your-mind/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/haunted-ship/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/the-plunge/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/solar-flare/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/the-catacombs/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/limbo/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/codependence-solo/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/collapse-nexel/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/belladonna/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/mayhem/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/chromacave/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/wavterminal/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/walter-white/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/infinite-chaos/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/make-paul-dance/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/operation-evolution/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/damascus/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/decks-dark/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/saryyx-never-clear/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/the-yangire/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/climax/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/ordinary/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/sinister-silence/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/the-jet-engine/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/coalescence/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/midnight/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/doppler-solo/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/cimmerian-shade/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/psychopath-denipol/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/trakines/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/between-duality/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/arcturus/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/diabolic-clubstep/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/beeline-solo/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/dreamstep/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/sonic-wave-infinity/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/tartarus/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/waterfall/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/jigsaw/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/delta/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/trickshot/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/bpata-mpaka/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/natural-disaster/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/the-wonder-of-you/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/dualist-solo/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/sanctity/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/the-golden/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/frame-reframe/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/oblivion/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/viprin-ufo/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/network-agat3/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/atomic-cannon-mk-iii/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://extremedemongacha.games/cards/terminal-rampancy/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/barbarosfinalefinale/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/sank/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://extremedemongacha.games/cards/asterios/</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>

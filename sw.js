@@ -1,5 +1,5 @@
-const KEY = 'demon-pack-lab-3a98a5f5bb7969';
-const PATHS = ["/","/cards/","/guide/","/about/","/privacy/","/contact/","/terms/","/offline.html","/manifest.webmanifest","/assets/apex-prism.webp","/assets/app-icon-192.png","/assets/app-icon-512.png","/assets/demon-gacha-guide-binder.webp","/assets/demon-gacha-guide-foil.webp","/assets/demon-gacha-guide-pack.webp","/assets/demon-pack-lab-logo.webp","/assets/site-ac193a369ad8/app.mjs","/assets/site-ac193a369ad8/search.mjs","/assets/site-ac193a369ad8/styles.css","/assets/site-ac193a369ad8/data.mjs","/assets/site-ac193a369ad8/release-state.mjs"];
+const KEY = 'demon-pack-lab-f5605b6a1fda35';
+const PATHS = ["/","/cards/","/guide/","/about/","/privacy/","/contact/","/terms/","/guide/apex/","/offline.html","/manifest.webmanifest","/assets/apex-prism.webp","/assets/app-icon-192.png","/assets/app-icon-512.png","/assets/demon-gacha-guide-binder.webp","/assets/demon-gacha-guide-foil.webp","/assets/demon-gacha-guide-pack.webp","/assets/demon-pack-lab-logo.webp","/assets/site-d20510b93d28/app.mjs","/assets/site-d20510b93d28/search.mjs","/assets/site-d20510b93d28/styles.css","/assets/site-d20510b93d28/data.mjs","/assets/site-d20510b93d28/release-state.mjs"];
 self.addEventListener('install', event => event.waitUntil(caches.open(KEY).then(cache => cache.addAll(PATHS))));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys =>
   Promise.all(keys.filter(key => key.startsWith('demon-pack-lab-') && key !== KEY).map(key => caches.delete(key)))
